@@ -23,6 +23,9 @@ class GenderAge
      ~GenderAge();
      
     int detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_listi);
+
+  private:
+    int get_age(std::vector<double> output);
   private:
     ncnn::Net GenderAgeFace;
 };

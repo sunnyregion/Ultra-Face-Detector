@@ -18,7 +18,7 @@ int GenderAge::detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_list) {
     ncnn::Extractor ex = GenderAgeFace.create_extractor();
     // ex.set_light_mode(true);
     // ex.set_num_threads(4);
-    ncnn::Mat img_ncnn = ncnn::Mat::from_pixels_resize(img.data,ncnn::Mat::PIXEL_BGR2RGB, img.cols, img.rows,112 ,112);
+    ncnn::Mat img_ncnn = ncnn::Mat::from_pixels_resize(img.data,ncnn::Mat::PIXEL_BGR2RGB, img.cols, img.rows,128 ,128);
     // const float mean_vals[3] = {127.5f, 127.5f, 127.5f};
     // const float norm_vals[3] = {0.0078125f, 0.0078125f, 0.0078125f};
     // img_ncnn.substract_mean_normalize(mean_vals, norm_vals);
@@ -30,7 +30,7 @@ int GenderAge::detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_list) {
         out.push_back(img_out[i]);
     }
     GenderAgeInfo gai;
-    gai.age=36;
+    
      if (out[0] > out[1]){
          gai.gender="female";
          gai.gender_lite="F";
@@ -40,6 +40,16 @@ int GenderAge::detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_list) {
         gai.gender_lite="M";
         // std::cout << "male" << std::endl;
     }
+    gai.age=get_age(out);
     face_list.push_back(gai);
     return 0;
+}
+
+int GenderAge::get_age(std::vector<double> out){
+    int age = 0;
+     for (int j=1; j<101; j++)
+    {
+        age+=(out[2*j]>out[2*j+1]? 0:1);
+    }
+    return age;
 }
