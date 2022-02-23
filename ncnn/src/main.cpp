@@ -46,6 +46,8 @@ int main(int argc, char **argv) {
             cv::Rect roi(face.x1, face.y1, face.x2-face.x1, face.y2-face.y1);
             cv::Mat image_roi = frame(roi);
             genderface.detect(frame,gender_age_info);
+            std::cout << "--------------"<<gender_age_info[i].gender<<"------------"<<std::endl;
+            //  genderface.detect(image_roi,gender_age_info);
             
             cv::imwrite("./hello.jpg",image_roi);
         }

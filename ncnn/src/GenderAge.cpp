@@ -19,6 +19,9 @@ int GenderAge::detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_list) {
     // ex.set_light_mode(true);
     // ex.set_num_threads(4);
     ncnn::Mat img_ncnn = ncnn::Mat::from_pixels_resize(img.data,ncnn::Mat::PIXEL_BGR2RGB, img.cols, img.rows,112 ,112);
+    // const float mean_vals[3] = {127.5f, 127.5f, 127.5f};
+    // const float norm_vals[3] = {0.0078125f, 0.0078125f, 0.0078125f};
+    // img_ncnn.substract_mean_normalize(mean_vals, norm_vals);
     ex.input("data", img_ncnn);
     ncnn::Mat img_out;
     ex.extract("fc1", img_out);
@@ -26,10 +29,17 @@ int GenderAge::detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_list) {
     for (int i = 0; i < img_out.w; ++i){
         out.push_back(img_out[i]);
     }
+    GenderAgeInfo gai;
+    gai.age=36;
      if (out[0] > out[1]){
-        std::cout << "female" << std::endl;
+         gai.gender="female";
+         gai.gender_lite="F";
+        // std::cout << "female" << std::endl;
     }else{
-        std::cout << "male" << std::endl;
+        gai.gender="male";
+        gai.gender_lite="M";
+        // std::cout << "male" << std::endl;
     }
+    face_list.push_back(gai);
     return 0;
 }
