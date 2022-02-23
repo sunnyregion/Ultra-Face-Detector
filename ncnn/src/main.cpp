@@ -45,6 +45,18 @@ int main(int argc, char **argv) {
             cv::rectangle(frame, pt1, pt2, cv::Scalar(0, 255, 0), 2);
             cv::Rect roi(face.x1, face.y1, face.x2-face.x1, face.y2-face.y1);
             cv::Mat image_roi = frame(roi);
+            // image_roi
+            face_box box;
+            box.x0 = face.x1;
+            box.y0 =  face.y1;
+            box.x1 = face.x2;
+            box.y1 = face.y2;
+            // box.landmark=face.landmarks[0];
+            // for (int i = 0; i < 5; i++)
+            // {
+            //     box.landmark.x[i] = face.landmarks
+            //     box.landmark.y[i] = face_info[0].pts.y[i];
+            // }
             genderface.detect(frame,gender_age_info);
             std::cout << "--------------性别："<<gender_age_info[i].gender<<"\t 年龄："<<gender_age_info[i].age<<"------------"<<std::endl;
             //  genderface.detect(image_roi,gender_age_info);
