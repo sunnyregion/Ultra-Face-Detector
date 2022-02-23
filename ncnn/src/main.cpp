@@ -21,12 +21,12 @@ int main(int argc, char **argv) {
     std::string param_path = argv[2];
     UltraFace ultraface(bin_path, param_path, 320, 240, 1, 0.7); // config model input
 
-    // auto bin= "../data/genderage.bin";
-    // auto param = "../data/genderage.param";
+    auto bin= "../data/genderage.bin";
+    auto param = "../data/genderage.param";
     // std::string bin = argv[3];
     // std::string param = argv[4];
-    // GenderAge genderface(bin,param);
-    GenderAge gender(bin_path, param_path);
+    GenderAge genderface(bin,param);
+    
     for (int i = 3; i < argc; i++) {
         std::string image_file = argv[i];
         std::cout << "Processing " << image_file << std::endl;
@@ -45,7 +45,8 @@ int main(int argc, char **argv) {
             cv::rectangle(frame, pt1, pt2, cv::Scalar(0, 255, 0), 2);
             cv::Rect roi(face.x1, face.y1, face.x2-face.x1, face.y2-face.y1);
             cv::Mat image_roi = frame(roi);
-            // GenderAge::detect(image_roi,gender_age_info);
+            genderface.detect(frame,gender_age_info);
+            
             cv::imwrite("./hello.jpg",image_roi);
         }
 

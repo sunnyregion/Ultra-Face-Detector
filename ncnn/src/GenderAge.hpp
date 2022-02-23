@@ -19,7 +19,7 @@ class GenderAge
 {
   public:
     GenderAge(const std::string &bin_path, const std::string &param_path);
-    //  ~GenderAge();
+     ~GenderAge();
     int detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_list);
   private:
     ncnn::Net GenderAgeFace;
