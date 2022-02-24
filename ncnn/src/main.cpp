@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 
     std::string bin_path = argv[1];
     std::string param_path = argv[2];
-    UltraFace ultraface(bin_path, param_path, 320, 240, 1, 0.7); // config model input
+    // UltraFace ultraface(bin_path, param_path, 320, 240, 1, 0.7); // config model input
 
     auto bin= "../data/genderage.bin";
     auto param = "../data/genderage.param";
@@ -37,29 +37,29 @@ int main(int argc, char **argv) {
         ncnn::Mat inmat = ncnn::Mat::from_pixels(frame.data, ncnn::Mat::PIXEL_BGR2RGB, frame.cols, frame.rows);
 
         std::vector<FaceInfo> face_info;
-        ultraface.detect(inmat, face_info);
+        // ultraface.detect(inmat, face_info);
 
         
-        for (int i = 0; i < face_info.size(); i++) {
-            auto face = face_info[i];
-            cv::Point pt1(face.x1, face.y1);
-            cv::Point pt2(face.x2, face.y2);
-            // cv::rectangle(frame, pt1, pt2, cv::Scalar(0, 255, 0), 2);
-            cv::Rect roi(face.x1, face.y1, face.x2-face.x1, face.y2-face.y1);
-            // cv::Mat image_roi = frame(roi);
+        // for (int i = 0; i < face_info.size(); i++) {
+        //     auto face = face_info[i];
+        //     cv::Point pt1(face.x1, face.y1);
+        //     cv::Point pt2(face.x2, face.y2);
+        //     // cv::rectangle(frame, pt1, pt2, cv::Scalar(0, 255, 0), 2);
+        //     cv::Rect roi(face.x1, face.y1, face.x2-face.x1, face.y2-face.y1);
+        //     // cv::Mat image_roi = frame(roi);
             
-            // genderface.detect(frame,gender_age_info);
-            // std::cout << "--------------性别："<<gender_age_info[i].gender<<"\t 年龄："<<gender_age_info[i].age<<"------------"<<std::endl;
-            // cv::imwrite("./hello.jpg",image_roi);
-        }
+        //     // genderface.detect(frame,gender_age_info);
+        //     // std::cout << "--------------性别："<<gender_age_info[i].gender<<"\t 年龄："<<gender_age_info[i].age<<"------------"<<std::endl;
+        //     // cv::imwrite("./hello.jpg",image_roi);
+        // }
 
         Timer timer;
-        string param = "../data/face1m.param";
-        string bin = "../data/face1m.bin";
+        // string param = "../data/face1m.param";
+        // string bin = "../data/face1m.bin";
         // const int max_side = 320;
 
         // slim or RFB
-        Detector detector(param, bin, false);
+        Detector detector(param_path, bin_path, false);
 
         std::vector<bbox> face_boxes;
 
@@ -96,10 +96,10 @@ int main(int argc, char **argv) {
                     cv::imwrite("./hello3.jpg", warp);
 
                     cv::rectangle(frame, rect, cv::Scalar(0, 0, 255), 1, 8, 0);
-                    char test[80];
-                    sprintf(test, "%f", face_boxes[j].score);
+                    char text[80];
+                    sprintf(text, "%f--gender:%s--age:%d", face_boxes[j].score,gender_age_info[j].gender_lite.c_str(),gender_age_info[j].age);
 
-                    cv::putText(frame, test, cv::Size((face_boxes[j].x1/scale), face_boxes[j].y1/scale), cv::FONT_HERSHEY_COMPLEX, 0.5, cv::Scalar(0, 255, 255));
+                    cv::putText(frame, text, cv::Size((face_boxes[j].x1/scale), face_boxes[j].y1/scale), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(205, 0, 0,0));
                     cv::circle(frame, cv::Point(face_boxes[j].landmark[0]._x / scale, face_boxes[j].landmark[0]._y / scale), 1, cv::Scalar(0, 0, 225), 4);
                     cv::circle(frame, cv::Point(face_boxes[j].landmark[1]._x / scale, face_boxes[j].landmark[1]._y / scale), 1, cv::Scalar(0, 255, 225), 4);
                     cv::circle(frame, cv::Point(face_boxes[j].landmark[2]._x / scale, face_boxes[j].landmark[2]._y / scale), 1, cv::Scalar(255, 0, 225), 4);
@@ -107,10 +107,6 @@ int main(int argc, char **argv) {
                     cv::circle(frame, cv::Point(face_boxes[j].landmark[4]._x / scale, face_boxes[j].landmark[4]._y / scale), 1, cv::Scalar(255, 0, 0), 4);
 
             }
-            
-            
-           
-           
              
         }
 
