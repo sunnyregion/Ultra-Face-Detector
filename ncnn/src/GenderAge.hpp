@@ -21,12 +21,12 @@ class GenderAge
   public:
     GenderAge(const std::string &bin_path, const std::string &param_path);
      ~GenderAge();
-     
+    cv::Mat WarpAffine(cv::Mat &img, face_box *faceBox);
     int detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_listi);
 
   private:
     int get_age(std::vector<double> output);
-    cv::Mat WarpAffine(cv::Mat &img, face_box *faceBox);
+   
     cv::Mat similaryTransform(cv::Mat &src, cv::Mat &dst);
     cv::Mat meanAxis0(const cv::Mat &src);
     cv::Mat elementwiseMinus(const cv::Mat &A, const cv::Mat &B);

@@ -85,6 +85,8 @@ int UltraFace::detect(ncnn::Mat &img, std::vector<FaceInfo> &face_list) {
     ncnn::Mat boxes;
     ex.extract("scores", scores);
     ex.extract("boxes", boxes);
+    //  ex.extract("output0", scores);
+    // ex.extract("488", boxes);
     generateBBox(bbox_collection, scores, boxes, score_threshold, num_anchors);
     nms(bbox_collection, face_list);
     return 0;
@@ -99,10 +101,10 @@ void UltraFace::generateBBox(std::vector<FaceInfo> &bbox_collection, ncnn::Mat s
             float w = exp(boxes.channel(0)[i * 4 + 2] * size_variance) * priors[i][2];
             float h = exp(boxes.channel(0)[i * 4 + 3] * size_variance) * priors[i][3];
 
-            rects.x1 = clip(x_center - w / 2.0, 1) * image_w;
-            rects.y1 = clip(y_center - h / 2.0, 1) * image_h;
-            rects.x2 = clip(x_center + w / 2.0, 1) * image_w;
-            rects.y2 = clip(y_center + h / 2.0, 1) * image_h;
+            rects.x1 = clip(x_center - w / 1.4, 1) * image_w;
+            rects.y1 = clip(y_center - h / 1.4, 1) * image_h;
+            rects.x2 = clip(x_center + w / 1.6, 1) * image_w;
+            rects.y2 = clip(y_center + h / 2, 1) * image_h;
             rects.score = clip(scores.channel(0)[i * 2 + 1], 1);
             bbox_collection.push_back(rects);
         }

@@ -36,7 +36,9 @@ int GenderAge::detect(cv::Mat &img, std::vector<GenderAgeInfo> &face_list) {
     ncnn::Extractor ex = GenderAgeFace.create_extractor();
     // ex.set_light_mode(true);
     // ex.set_num_threads(4);
-    ncnn::Mat img_ncnn = ncnn::Mat::from_pixels_resize(img.data,ncnn::Mat::PIXEL_BGR2RGB, img.cols, img.rows,128 ,128);
+    // ncnn::Mat img_ncnn = ncnn::Mat::from_pixels_resize(img.data,ncnn::Mat::PIXEL_BGR2RGB, img.cols, img.rows,128 ,128);
+
+    ncnn::Mat img_ncnn = ncnn::Mat::from_pixels_resize(img.data,ncnn::Mat::PIXEL_BGR2RGB, img.cols, img.rows,112 ,112);
     // const float mean_vals[3] = {127.5f, 127.5f, 127.5f};
     // const float norm_vals[3] = {0.0078125f, 0.0078125f, 0.0078125f};
     // img_ncnn.substract_mean_normalize(mean_vals, norm_vals);
