@@ -17,5 +17,6 @@ include_directories(3rdparty/ncnn/src)
 
 find_package(OpenCV REQUIRED)
 
-add_executable(face_detect src/main.cpp src/UltraFace.cpp src/main.cpp src/GenderAge.cpp src/main.cpp src/util.cpp)
+add_executable(face_detect src/main.cpp src/UltraFace.cpp src/main.cpp src/GenderAge.cpp src/main.cpp src/util.cpp 
+src/FaceDetector.cpp)
 target_link_libraries(face_detect ncnn ${OpenCV_LIBS})
